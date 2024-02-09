@@ -1,0 +1,18 @@
+version: '3'
+
+tasks:
+  build:
+    desc: Build this docker image
+    dir: src
+    cmds:
+      - docker build -t sfrunner:latest .
+
+  run:
+    desc: Runs a shell inside the sfrunner image
+    cmds:
+      - docker run --rm --volume $HOME:/localhost sfrunner:latest --login
+
+  install:
+    desc: Gives script to install 'sfrunner' as local command
+    cmds:
+      - docker run --rm --volume $HOME:/localhost sfrunner:latest init | bash
