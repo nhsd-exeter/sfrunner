@@ -14,9 +14,16 @@ RUN apt-get update && \
     apt-get install -y --allow-downgrades --no-install-recommends \
     gnupg=2.2.27-2+deb11u2 \
     wget apt-transport-https gpg \
-    temurin-21-jdk \
+    temurin-20-jdk \
     kitty-terminfo=0.19.3-1 && \
     rm -rf /var/cache/apt/archives /var/lib/apt/lists/* 
+
+# Install node
+RUN curl -fsSL https://deb.nodesource.com/setup_21.x | bash - && \
+    apt-get install -y nodejs
+
+# Enable corepack, enabling yarn (https://yarnpkg.com/getting-started/install)
+RUN corepack enable
 
 # Install JDK
 #RUN apt-get update && \
@@ -56,6 +63,6 @@ ENV AWS_REGION_ABBREVIATION_TYPE=fixed
 ENV DOCKER_IMAGE="sfrunner"
 ENV DOCKER_TAG="latest"
 
-ENV JAVA_HOME=/usr/lib/jvm/temurin-21-jdk-arm64
+ENV JAVA_HOME=/usr/lib/jvm/temurin-20-jdk-arm64
 
 WORKDIR /
