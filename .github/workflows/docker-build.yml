@@ -1,0 +1,15 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deployment:
+    steps:
+      - name: Install Task
+        uses: arduino/setup-task@v2
+      - name: Run tests
+        run: task build
