@@ -12,5 +12,7 @@ jobs:
     steps:
       - name: Install Task
         uses: arduino/setup-task@v2
+      - name: Check out code
+        uses: actions/checkout@v4
       - name: Run tests
         run: task build
