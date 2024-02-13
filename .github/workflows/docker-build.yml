@@ -14,5 +14,6 @@ jobs:
         uses: arduino/setup-task@v2
       - name: Check out code
         uses: actions/checkout@v4
-      - name: Run tests
+      - name: Build docker image
         run: task build
+

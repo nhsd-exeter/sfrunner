@@ -15,6 +15,7 @@ RUN apt-get update && \
     gnupg=2.2.27-2+deb11u2 \
     wget apt-transport-https gpg \
     temurin-20-jdk \
+    docker.io \
     kitty-terminfo=0.19.3-1 && \
     rm -rf /var/cache/apt/archives /var/lib/apt/lists/* 
 
@@ -39,7 +40,6 @@ ENV PATH="/opt/apache-maven-3.9.6/bin:$PATH"
 
 # Install taskfile
 RUN cd /; sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d
-
 
 # Shell banner
 ENV BANNER="sfrunner"
