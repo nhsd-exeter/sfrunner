@@ -15,9 +15,8 @@ RUN apt-get update && \
     gnupg=2.2.27-2+deb11u2 \
     wget apt-transport-https gpg \
     temurin-20-jdk \
-    docker.io \
-    kitty-terminfo=0.19.3-1 && \
-    rm -rf /var/cache/apt/archives /var/lib/apt/lists/* 
+    docker.io && \
+    rm -rf /var/cache/apt/archives /var/lib/apt/lists/*
 
 # Install node
 RUN curl -fsSL https://deb.nodesource.com/setup_21.x | bash - && \
