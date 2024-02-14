@@ -8,15 +8,24 @@ FROM cloudposse/geodesic:$VERSION-$OS
 RUN wget -qO - https://packages.adoptium.net/artifactory/api/gpg/key/public | gpg --dearmor | tee /etc/apt/trusted.gpg.d/adoptium.gpg > /dev/null
 # Configure adoptium repository
 RUN echo "deb https://packages.adoptium.net/artifactory/deb $(awk -F= '/^VERSION_CODENAME/{print$2}' /etc/os-release) main" | tee /etc/apt/sources.list.d/adoptium.list
+# Configure docker repository
+RUN install -m 0755 -d /etc/apt/keyrings && \
+    curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc && \
+    chmod a+r /etc/apt/keyrings/docker.asc
+RUN echo \
+      "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+      $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+      sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 # Install various packages
 RUN apt-get update && \
     apt-get install -y --allow-downgrades --no-install-recommends \
-    gnupg=2.2.27-2+deb11u2 \
+    gnupg \
     wget apt-transport-https gpg \
     temurin-20-jdk \
-    docker.io && \
+    docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin && \
     rm -rf /var/cache/apt/archives /var/lib/apt/lists/*
+
 
 # Install node
 RUN curl -fsSL https://deb.nodesource.com/setup_21.x | bash - && \
