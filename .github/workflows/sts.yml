@@ -22,7 +22,7 @@ jobs:
       - name: Log into AWS
         uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
-          role-to-assume: ${{ secrets.GHOIDCAWS }}
+          role-to-assume: arn:aws:iam::730319765130:role/uec-sf-github-access
           role-session-name: GitHub_to_AWSOIDC
           aws-region: ${{ env.AWS_REGION }}
       - name: AWS STS whoAmI
