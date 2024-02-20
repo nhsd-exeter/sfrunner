@@ -56,10 +56,27 @@ Then try to use the integration:
 * You may need to sign into NHS and use MFA
 * After you have signed in, all possible sessions should now be displayed in Leapp
 
-Now try to test this inside sfrunner:
-* Click the play button next to a profile (such as the mgmt one) 
-* Enter sfrunner using `sfrunner --with-docker`
-* Check your assumed role using `aws sts get-caller-identity`
+
+
+## Installation
+
+To install sfrunner, clone the repository and run the following commands from inside the `sfrunner` directory:
+
+```bash
+task install
+echo 'export WITH_DOCKER=true #automatically run sfrunner with docker support' >> ~/.zshrc
+'''
+
+When sfrunner is run, it will connect to the docker daemon on your host machine in order to run
+docker images.  The `WITH_DOCKER` environment variable is used to tell sfrunner to run with docker in
+this way.
+
+To test sfrunner, you can do the following: 
+1. start a new shell so that WITH_DOCKER is set
+2. Open Leapp, and click the play button next to the mgmt profile
+3. Go into the service finder source directory, and run `sfrunner`
+4. You should see the sfrunner prompt, and be able to run commands inside the container
+5. Run `aws sts get-caller-identity` to check that you are running as the assumed role
 
 
 ## Usage
