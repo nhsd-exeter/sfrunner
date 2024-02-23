@@ -18,12 +18,17 @@ RUN echo \
       sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 # Install various packages
+
+#     temurin-20-jdk - jdk for building backend project
+#     docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin  - docker for running services
+#     libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb - cypress
 RUN apt-get update && \
     apt-get install -y --allow-downgrades --no-install-recommends \
     gnupg \
     wget apt-transport-https gpg \
     temurin-20-jdk \
-    docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin && \
+    docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin  \
+    libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb && \
     rm -rf /var/cache/apt/archives /var/lib/apt/lists/*
 
 

@@ -1,5 +1,19 @@
 version: '3'
 
+vars:
+  AWS_REGION: "eu-west-2"
+  CONFIG:
+    sh: aws secretsmanager get-secret-value --secret-id uec-sf-sfrunner/deployment --region {{.AWS_REGION}} --output json | jq -r '.SecretString | fromjson'
+  ECR_HOST:
+    sh: jq -nr '{{.CONFIG}}.ECR_HOST'
+  REPO_NAME:
+    sh: jq -nr '{{.CONFIG}}.REPO_NAME'
+  ECR_REPO: '{{.ECR_HOST}}/{{.REPO_NAME}}'
+
+includes:
+  infra:
+    taskfile: infrastructure/taskfile.yml
+
 tasks:
   build:
     desc: Build this docker image
@@ -16,3 +30,17 @@ tasks:
     desc: Gives script to install 'sfrunner' as local command
     cmds:
       - docker run --rm --volume $HOME:/localhost sfrunner:latest init | bash
+
+
+  ecr-login:
+    internal: false
+    desc: Docker login to ECR so one can send/receive docker images.  Must have role assumed, via Leapp
+    cmds:
+      - aws ecr get-login-password --region {{.AWS_REGION}} | docker login --username AWS --password-stdin {{.ECR_HOST}}
+
+  ecr-push:
+    desc: Pushes the sfrunner image to ECR
+    cmds:
+      - task: ecr-login
+      - docker tag sfrunner:latest {{.ECR_REPO}}:latest
+      - docker push {{.ECR_REPO}}:latest

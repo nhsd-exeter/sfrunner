@@ -3,7 +3,7 @@
 This is a docker image that contains everything needed to build,
 run, and test service finder.
 
-# Why does this exist?
+## Why does this exist?
 
 Service finder was previously run through a huge series
 of makefiles.  This was both slow to run and difficult to
@@ -13,7 +13,24 @@ to run every command inside a separate docker container.
 This system takes the opposite approach of that, with one
 docker container that contains every dependency, such that
 all development and testing can be done inside the container.
-      
+          
+## Structure of project
+
+```
+├── .github                     # github actions
+│   └── workflows
+│       ├── docker-build.yml
+│       └── sts.yml
+├── src                         # definition of sfrunner image
+│ └── Dockerfile
+├── infrastructure              # infrastructure
+│ └── stacks                    # terraform roots
+│    └── ecr                    # terraform root for creating ecr repo
+└── taskfile.yml                # tasks for building and running sfrunner
+
+```
+
+
 ## Prerequisites
 
 You need to have the following installed:

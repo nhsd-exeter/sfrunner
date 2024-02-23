@@ -1,0 +1,50 @@
+version: '3'
+
+tasks:
+
+  create-plugin-cache-dir:
+    desc: Create the plugin cache directory
+    cmds:
+      - mkdir -p /localhost/.terraform.d/plugin-cache
+
+  init:
+    desc: Initialise the terraform root
+    dir: '{{.ROOT_DIR}}/infrastructure/stacks/ecr'
+    vars:
+      TERRAFORM_STATE_STORE:
+        sh: jq -nr '{{.CONFIG}}.TERRAFORM_STATE_STORE'
+      TERRAFORM_STATE_LOCK:
+        sh: jq -nr '{{.CONFIG}}.TERRAFORM_STATE_LOCK'
+      TERRAFORM_STATE_KEY:
+        sh: jq -nr '{{.CONFIG}}.TERRAFORM_STATE_KEY'
+      REPO_NAME:
+        sh: jq -nr '{{.CONFIG}}.REPO_NAME'
+    cmds:
+      - task: create-plugin-cache-dir
+      - terraform init -backend-config="bucket={{.TERRAFORM_STATE_STORE}}" -backend-config="dynamodb_table={{.TERRAFORM_STATE_LOCK}}" -backend-config="encrypt=true" -backend-config="key={{.TERRAFORM_STATE_KEY}}/terraform.state" -backend-config="region={{.AWS_REGION}}" -backend-config="workspace_key_prefix=uec-sf/sfrunner"
+
+  plan:
+    desc: Plan the infrastructure changes
+    dir: '{{.ROOT_DIR}}/infrastructure/stacks/ecr'
+    vars:
+      REPO_NAME:
+        sh: jq -nr '{{.CONFIG}}.REPO_NAME'
+    env:
+      TF_VAR_aws_region: '{{.AWS_REGION}}'
+      TF_VAR_repo_name: '{{.REPO_NAME}}'
+    cmds:
+      - terraform plan -out=tfplan
+
+  apply:
+    desc: Apply the infrastructure changes
+    dir: '{{.ROOT_DIR}}/infrastructure/stacks/ecr'
+    vars:
+      REPO_NAME:
+        sh: jq -nr '{{.CONFIG}}.REPO_NAME'
+    env:
+      TF_VAR_aws_region: '{{.AWS_REGION}}'
+      TF_VAR_repo_name: '{{.REPO_NAME}}'
+    cmds:
+      - terraform apply "tfplan"
+
+
