@@ -41,7 +41,7 @@ pipeline {
                 script {
                     // Download and install Task
                     sh """
-                        curl -sL ${env.TASK_DOWNLOAD_URL} -o task.tar.gz
+                        curl -sL ${TASK_DOWNLOAD_URL} -o task.tar.gz
                         tar -xzf task.tar.gz
                         mv task /tmp/task
                         /tmp/task --version
