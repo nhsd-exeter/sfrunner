@@ -1,6 +1,8 @@
 pipeline {
 
-    agent any
+    agent {
+        label "jenkins-slave"
+    }
 
     environment {
         // Define the Task version to install
