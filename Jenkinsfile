@@ -36,7 +36,7 @@ pipeline {
                         curl -sL ${taskDownloadUrl} -o task.tar.gz
                         tar -xzf task.tar.gz
                         mv task /tmp
-                        task --version
+                        /tmp/task --version
                         """
                     } else {
                         error "Unsupported OS"
