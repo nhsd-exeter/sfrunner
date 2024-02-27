@@ -80,6 +80,7 @@ Then try to use the integration:
 To install sfrunner, clone the repository and run the following commands from inside the `sfrunner` directory:
 
 ```bash
+task build
 task install
 echo 'export WITH_DOCKER=true #automatically run sfrunner with docker support' >> ~/.zshrc
 ```
