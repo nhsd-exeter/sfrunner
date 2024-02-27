@@ -18,34 +18,29 @@ pipeline {
                 script {
                     // Detect architecture
                     if (isUnix()) {
+                        def taskDownloadUrl = ''
                         def arch = sh(script: 'uname -m', returnStdout: true).trim()
                         echo "Detected architecture: ${arch}"
 
                         // Set the download URL based on architecture
                         if (arch == 'x86_64') {
-                            env.TASK_DOWNLOAD_URL = "https://github.com/go-task/task/releases/download/v${env.TASK_VERSION}/task_linux_amd64.tar.gz"
+                            taskDownloadUrl = "https://github.com/go-task/task/releases/download/v${env.TASK_VERSION}/task_linux_amd64.tar.gz"
                         } else if (arch.startsWith('arm') || arch.startsWith('aarch64')) {
-                            env.TASK_DOWNLOAD_URL = "https://github.com/go-task/task/releases/download/v${env.TASK_VERSION}/task_linux_arm64.tar.gz"
+                            taskDownloadUrl = "https://github.com/go-task/task/releases/download/v${env.TASK_VERSION}/task_linux_arm64.tar.gz"
                         } else {
                             error "Unsupported architecture: ${arch}"
                         }
+
+                        // Download and install Task
+                        sh """
+                        curl -sL ${taskDownloadUrl} -o task.tar.gz
+                        tar -xzf task.tar.gz
+                        mv task /usr/local/bin/task
+                        task --version
+                        """
                     } else {
                         error "Unsupported OS"
                     }
-                }
-            }
-        }
-
-        stage('Install Task') {
-            steps {
-                script {
-                    // Download and install Task
-                    sh """
-                        curl -sL ${TASK_DOWNLOAD_URL} -o task.tar.gz
-                        tar -xzf task.tar.gz
-                        mv task /tmp/task
-                        /tmp/task --version
-                    """
                 }
             }
         }
