@@ -5,6 +5,9 @@ tasks:
   create-plugin-cache-dir:
     desc: Create the plugin cache directory
     cmds:
+      - echo pwd
+      - pwd
+      - 
       - mkdir -p /localhost/.terraform.d/plugin-cache
 
   init:

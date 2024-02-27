@@ -108,7 +108,12 @@ To build the docker image, run the following command:
 ```bash
 task build
 ```
+          
+To then install sfrunner to your machine, so you can run `sfrunner` from the command line:
 
+```bash
+task install
+```
 
 
 ### List existing tasks
