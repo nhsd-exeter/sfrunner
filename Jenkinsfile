@@ -35,7 +35,7 @@ pipeline {
                         sh """
                         curl -sL ${taskDownloadUrl} -o task.tar.gz
                         tar -xzf task.tar.gz
-                        mv task /usr/local/bin/task
+                        mv task /tmp
                         task --version
                         """
                     } else {
