@@ -82,7 +82,7 @@ To install sfrunner, clone the repository and run the following commands from in
 ```bash
 task install
 echo 'export WITH_DOCKER=true #automatically run sfrunner with docker support' >> ~/.zshrc
-'''
+```
 
 When sfrunner is run, it will connect to the docker daemon on your host machine in order to run
 docker images.  The `WITH_DOCKER` environment variable is used to tell sfrunner to run with docker in
