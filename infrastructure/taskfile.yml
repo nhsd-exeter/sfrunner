@@ -7,8 +7,8 @@ tasks:
     cmds:
       - echo pwd
       - pwd
-      - 
-      - mkdir -p /localhost/.terraform.d/plugin-cache
+      - env
+#      - mkdir -p /localhost/.terraform.d/plugin-cache
 
   init:
     desc: Initialise the terraform root
