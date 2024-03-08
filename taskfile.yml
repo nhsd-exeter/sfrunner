@@ -2,13 +2,23 @@ version: '3'
 
 vars:
   AWS_REGION: "eu-west-2"
+  TEMP_ROLE:
+    sh: aws sts assume-role --role-arn arn:aws:iam::$AWS_ACCOUNT_ID_NONPROD:role/uec-sf-jenkins-assume-role --role-session-name AWSCLI-Session --duration-seconds 3600
+  AWS_ACCESS_KEY_ID:
+    sh: echo "{{.TEMP_ROLE}}" | jq -r '.Credentials.AccessKeyId'
+  AWS_SECRET_ACCESS_KEY:
+    sh: echo "{{.TEMP_ROLE}}" | jq -r '.Credentials.SecretAccessKey'
+  AWS_SESSION_TOKEN:
+    sh: echo "{{.TEMP_ROLE}}" | jq -r '.Credentials.SessionToken'
   CONFIG:
-    sh: aws secretsmanager get-secret-value --secret-id uec-sf-sfrunner/deployment --region {{.AWS_REGION}} --output json | jq -r '.SecretString | fromjson'
+    sh: aws secretsmanager get-secret-value --profile AWSCLI-Session --secret-id uec-sf-sfrunner/deployment --region {{.AWS_REGION}} --output json | jq -r '.SecretString | fromjson'
   ECR_HOST:
     sh: jq -nr '{{.CONFIG}}.ECR_HOST'
   REPO_NAME:
     sh: jq -nr '{{.CONFIG}}.REPO_NAME'
   ECR_REPO: '{{.ECR_HOST}}/{{.REPO_NAME}}'
+
+
 
 includes:
   infra:

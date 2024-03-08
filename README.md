@@ -97,6 +97,17 @@ To test sfrunner, you can do the following:
 2. Open Leapp, and click the play button next to the mgmt profile
 3. Go into the service finder source directory, and run `sfrunner`
 4. You should see the sfrunner prompt, and be able to run commands inside the container
+
+Note: the prompt changes depending on whether sfrunner can see you have the correct role assumed:
+
+```
+ ✗ . [none] (HOST) service-finder ⨠     # it is showing X and no profile
+ 
+ log on using leap, then press enter 
+ 
+ √ . [default] (HOST) service-finder ⨠  # you now have a tick and the name of the profile
+```
+
 5. Run `aws sts get-caller-identity` to check that you are running as the assumed role
 
 
