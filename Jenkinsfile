@@ -56,9 +56,7 @@ pipeline {
 
     post {
         always {
-            // Optional: Clean up by removing the Task binary
             sh "rm -f /tmp/task"
-            sh "rm -f ${TASK_FILE}"
         }
     }
 }
