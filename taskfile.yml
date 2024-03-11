@@ -11,7 +11,7 @@ vars:
   AWS_SESSION_TOKEN:
     sh: echo '{{.TEMP_ROLE}}' | jq -r '.Credentials.SessionToken'
   CONFIG:
-    sh: 'AWS_DEFAULT_REGION="{{.AWS_REGION}}" AWS_ACCESS_KEY_ID="{{.AWS_ACCESS_KEY_ID}}" AWS_SECRET_ACCESS_KEY="{{.AWS_SECRET_ACCESS_KEY}}" aws secretsmanager get-secret-value --secret-id uec-sf-sfrunner/deployment --region {{.AWS_REGION}} --output json | jq -r ".SecretString | fromjson"'
+    sh: 'AWS_DEFAULT_REGION="{{.AWS_REGION}}" AWS_ACCESS_KEY_ID="{{.AWS_ACCESS_KEY_ID}}" AWS_SECRET_ACCESS_KEY="{{.AWS_SECRET_ACCESS_KEY}}" AWS_SESSION_TOKEN="{{.AWS_SESSION_TOKEN}}" aws secretsmanager get-secret-value --secret-id uec-sf-sfrunner/deployment --region {{.AWS_REGION}} --output json | jq -r ".SecretString | fromjson"'
   ECR_HOST:
     sh: jq -nr '{{.CONFIG}}.ECR_HOST'
   REPO_NAME:
