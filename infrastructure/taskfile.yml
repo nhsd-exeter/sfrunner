@@ -44,6 +44,7 @@ tasks:
       TF_VAR_aws_region: '{{.AWS_REGION}}'
       TF_VAR_repo_name: '{{.REPO_NAME}}'
     cmds:
+      - echo "TF_VAR_repo_name=$TF_VAR_repo_name"
       - terraform plan -out=tfplan -no-color
 
   apply:
