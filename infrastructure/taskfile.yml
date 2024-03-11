@@ -5,15 +5,11 @@ tasks:
   create-plugin-cache-dir:
     desc: Create the plugin cache directory
     HOME_DIR:
-      sh: |
-        if [ -n "$GEODESIC_VERSION" ]; then
-          echo "/localhost"
-        else
-          echo "$JENKINS_AGENT_WORKDIR"
-        fi
+      sh: if [ -n "$GEODESIC_VERSION" ]; then echo "/localhost" else echo "$JENKINS_AGENT_WORKDIR" fi
     cmds:
       - echo pwd
       - pwd
+      - echo "Home dir"
       - echo '{{.HOME_DIR}}'
       - env
       - 'mkdir -p {{.HOME_DIR}}/.terraform.d/plugin-cache'
