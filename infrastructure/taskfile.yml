@@ -27,6 +27,7 @@ tasks:
       AWS_SECRET_ACCESS_KEY: '{{.AWS_SECRET_ACCESS_KEY}}'
       AWS_SESSION_TOKEN: '{{.AWS_SESSION_TOKEN}}'
     cmds:
+      - terraform --version
       - task: create-plugin-cache-dir
       - terraform init -backend-config="bucket={{.TERRAFORM_STATE_STORE}}" -backend-config="dynamodb_table={{.TERRAFORM_STATE_LOCK}}" -backend-config="encrypt=true" -backend-config="key={{.TERRAFORM_STATE_KEY}}/terraform.state" -backend-config="region={{.AWS_REGION}}" -backend-config="workspace_key_prefix=uec-sf/sfrunner"
 
