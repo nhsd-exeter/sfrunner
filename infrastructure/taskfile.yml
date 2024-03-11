@@ -7,6 +7,8 @@ tasks:
     HOME_DIR:
       sh: if [ -n "$GEODESIC_VERSION" ]; then echo "/localhost" else echo "$JENKINS_AGENT_WORKDIR" fi
     cmds:
+      - echo $GEODESIC_VERSION
+      - echo $JENKINS_AGENT_WORKDIR
       - echo pwd
       - pwd
       - echo "Home dir"
