@@ -9,7 +9,7 @@ vars:
   AWS_SECRET_ACCESS_KEY:
     sh: echo '{{.TEMP_ROLE}}' | jq -r '.Credentials.SecretAccessKey'
   AWS_SESSION_TOKEN:
-    sh: echo '{.TEMP_ROLE}}' | jq -r '.Credentials.SessionToken'
+    sh: echo '{{.TEMP_ROLE}}' | jq -r '.Credentials.SessionToken'
   CONFIG:
     sh: aws secretsmanager get-secret-value --profile AWSCLI-Session --secret-id uec-sf-sfrunner/deployment --region {{.AWS_REGION}} --output json | jq -r '.SecretString | fromjson'
   ECR_HOST:
