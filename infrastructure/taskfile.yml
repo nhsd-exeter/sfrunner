@@ -8,13 +8,6 @@ tasks:
       HOME_DIR:
         sh: if [ -n "$GEODESIC_VERSION" ]; then echo "/localhost"; else echo "$JENKINS_AGENT_WORKDIR"; fi
     cmds:
-      - echo $GEODESIC_VERSION
-      - echo $JENKINS_AGENT_WORKDIR
-      - echo pwd
-      - pwd
-      - echo "Home dir"
-      - echo '{{.HOME_DIR}}'
-      - env
       - 'mkdir -p {{.HOME_DIR}}/.terraform.d/plugin-cache'
 
   init:
@@ -34,12 +27,6 @@ tasks:
       AWS_SECRET_ACCESS_KEY: '{{.AWS_SECRET_ACCESS_KEY}}'
       AWS_SESSION_TOKEN: '{{.AWS_SESSION_TOKEN}}'
     cmds:
-      - echo "Initialising terraform"
-      - echo "Retrieved role"
-      - echo '{{.TEMP_ROLE}}'
-      - echo "Retrieved AWS"
-      - echo '{{.AWS_SECRET_ACCESS_KEY}}'
-      - echo "Retrieved config {{.CONFIG}}"
       - task: create-plugin-cache-dir
       - terraform init -backend-config="bucket={{.TERRAFORM_STATE_STORE}}" -backend-config="dynamodb_table={{.TERRAFORM_STATE_LOCK}}" -backend-config="encrypt=true" -backend-config="key={{.TERRAFORM_STATE_KEY}}/terraform.state" -backend-config="region={{.AWS_REGION}}" -backend-config="workspace_key_prefix=uec-sf/sfrunner"
 

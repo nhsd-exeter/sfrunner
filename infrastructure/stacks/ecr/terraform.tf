@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">= 0.13"  # Ensure you specify an appropriate Terraform version.
+  required_version = ">= 1.7.2"  # Ensure you specify an appropriate Terraform version.
 
   required_providers {
     aws = {
