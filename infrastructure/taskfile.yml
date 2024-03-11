@@ -42,7 +42,7 @@ tasks:
       AWS_SECRET_ACCESS_KEY: '{{.AWS_SECRET_ACCESS_KEY}}'
       AWS_SESSION_TOKEN: '{{.AWS_SESSION_TOKEN}}'
       TF_VAR_aws_region: '{{.AWS_REGION}}'
-      TF_VAR_repo_name: '{{.REPO_NAME}}'
+      TF_VAR_repo_name: '{{.ECR_REPO}}'
     cmds:
       - echo "TF_VAR_repo_name=$TF_VAR_repo_name"
       - terraform plan -out=tfplan -no-color
@@ -58,7 +58,7 @@ tasks:
       AWS_SECRET_ACCESS_KEY: '{{.AWS_SECRET_ACCESS_KEY}}'
       AWS_SESSION_TOKEN: '{{.AWS_SESSION_TOKEN}}'
       TF_VAR_aws_region: '{{.AWS_REGION}}'
-      TF_VAR_repo_name: '{{.REPO_NAME}}'
+      TF_VAR_repo_name: '{{.ECR_REPO}}'
     cmds:
       - terraform apply "tfplan" -no-color
 
