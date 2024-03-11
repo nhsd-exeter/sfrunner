@@ -38,6 +38,9 @@ tasks:
       REPO_NAME:
         sh: jq -nr '{{.CONFIG}}.REPO_NAME'
     env:
+      AWS_ACCESS_KEY_ID: '{{.AWS_ACCESS_KEY_ID}}'
+      AWS_SECRET_ACCESS_KEY: '{{.AWS_SECRET_ACCESS_KEY}}'
+      AWS_SESSION_TOKEN: '{{.AWS_SESSION_TOKEN}}'
       TF_VAR_aws_region: '{{.AWS_REGION}}'
       TF_VAR_repo_name: '{{.REPO_NAME}}'
     cmds:
@@ -50,6 +53,9 @@ tasks:
       REPO_NAME:
         sh: jq -nr '{{.CONFIG}}.REPO_NAME'
     env:
+      AWS_ACCESS_KEY_ID: '{{.AWS_ACCESS_KEY_ID}}'
+      AWS_SECRET_ACCESS_KEY: '{{.AWS_SECRET_ACCESS_KEY}}'
+      AWS_SESSION_TOKEN: '{{.AWS_SESSION_TOKEN}}'
       TF_VAR_aws_region: '{{.AWS_REGION}}'
       TF_VAR_repo_name: '{{.REPO_NAME}}'
     cmds:
