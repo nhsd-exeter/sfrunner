@@ -5,7 +5,7 @@ tasks:
   create-plugin-cache-dir:
     desc: Create the plugin cache directory
     HOME_DIR:
-      sh: if [ -n "$GEODESIC_VERSION" ]; then echo "/localhost" else echo "$JENKINS_AGENT_WORKDIR" fi
+      sh: if [ -n "$GEODESIC_VERSION" ]; then echo "/localhost"; else echo "$JENKINS_AGENT_WORKDIR"; fi
     cmds:
       - echo $GEODESIC_VERSION
       - echo $JENKINS_AGENT_WORKDIR
