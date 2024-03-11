@@ -4,11 +4,19 @@ tasks:
 
   create-plugin-cache-dir:
     desc: Create the plugin cache directory
+    HOME_DIR:
+      sh: |
+        if [ -n "$GEODESIC_VERSION" ]; then
+          echo "/localhost"
+        else
+          echo "$JENKINS_AGENT_WORKDIR"
+        fi
     cmds:
       - echo pwd
       - pwd
+      - echo '{{.HOME_DIR}}'
       - env
-#      - mkdir -p /localhost/.terraform.d/plugin-cache
+      - 'mkdir -p {{.HOME_DIR}}/.terraform.d/plugin-cache'
 
   init:
     desc: Initialise the terraform root
@@ -22,6 +30,10 @@ tasks:
         sh: jq -nr '{{.CONFIG}}.TERRAFORM_STATE_KEY'
       REPO_NAME:
         sh: jq -nr '{{.CONFIG}}.REPO_NAME'
+    env:
+      AWS_ACCESS_KEY_ID: '{{.AWS_ACCESS_KEY_ID}}'
+      AWS_SECRET_ACCESS_KEY: '{{.AWS_SECRET_ACCESS_KEY}}'
+      AWS_SESSION_TOKEN: '{{.AWS_SESSION_TOKEN}}'
     cmds:
       - echo "Initialising terraform"
       - echo "Retrieved role"
