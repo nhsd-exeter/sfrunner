@@ -24,6 +24,10 @@ tasks:
         sh: jq -nr '{{.CONFIG}}.REPO_NAME'
     cmds:
       - echo "Initialising terraform"
+      - echo "Retrieved role"
+      - echo '{{.TEMP_ROLE}}'
+      - echo "Retrieved AWS"
+      - echo '{{.AWS_ACCESS_KEY_ID}}'
       - echo "Retrieved config {{.CONFIG}}"
       - task: create-plugin-cache-dir
       - terraform init -backend-config="bucket={{.TERRAFORM_STATE_STORE}}" -backend-config="dynamodb_table={{.TERRAFORM_STATE_LOCK}}" -backend-config="encrypt=true" -backend-config="key={{.TERRAFORM_STATE_KEY}}/terraform.state" -backend-config="region={{.AWS_REGION}}" -backend-config="workspace_key_prefix=uec-sf/sfrunner"
