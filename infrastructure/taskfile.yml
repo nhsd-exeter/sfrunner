@@ -35,12 +35,6 @@ tasks:
     desc: Plan the infrastructure changes
     dir: '{{.ROOT_DIR}}/infrastructure/stacks/ecr'
     vars:
-      TERRAFORM_STATE_STORE:
-        sh: jq -nr '{{.CONFIG}}.TERRAFORM_STATE_STORE'
-      TERRAFORM_STATE_LOCK:
-        sh: jq -nr '{{.CONFIG}}.TERRAFORM_STATE_LOCK'
-      TERRAFORM_STATE_KEY:
-        sh: jq -nr '{{.CONFIG}}.TERRAFORM_STATE_KEY'
       REPO_NAME:
         sh: jq -nr '{{.CONFIG}}.REPO_NAME'
     env:
@@ -56,12 +50,6 @@ tasks:
     desc: Apply the infrastructure changes
     dir: '{{.ROOT_DIR}}/infrastructure/stacks/ecr'
     vars:
-      TERRAFORM_STATE_STORE:
-        sh: jq -nr '{{.CONFIG}}.TERRAFORM_STATE_STORE'
-      TERRAFORM_STATE_LOCK:
-        sh: jq -nr '{{.CONFIG}}.TERRAFORM_STATE_LOCK'
-      TERRAFORM_STATE_KEY:
-        sh: jq -nr '{{.CONFIG}}.TERRAFORM_STATE_KEY'
       REPO_NAME:
         sh: jq -nr '{{.CONFIG}}.REPO_NAME'
     env:
