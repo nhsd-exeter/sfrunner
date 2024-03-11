@@ -50,7 +50,7 @@ tasks:
       TF_VAR_aws_region: '{{.AWS_REGION}}'
       TF_VAR_repo_name: '{{.REPO_NAME}}'
     cmds:
-      - terraform plan -out=tfplan -backend-config="bucket={{.TERRAFORM_STATE_STORE}}" -backend-config="dynamodb_table={{.TERRAFORM_STATE_LOCK}}" -backend-config="encrypt=true" -backend-config="key={{.TERRAFORM_STATE_KEY}}/terraform.state" -backend-config="region={{.AWS_REGION}}" -backend-config="workspace_key_prefix=uec-sf/sfrunner"
+      - terraform plan -out=tfplan
 
   apply:
     desc: Apply the infrastructure changes
@@ -71,6 +71,6 @@ tasks:
       TF_VAR_aws_region: '{{.AWS_REGION}}'
       TF_VAR_repo_name: '{{.REPO_NAME}}'
     cmds:
-      - terraform apply "tfplan" -backend-config="bucket={{.TERRAFORM_STATE_STORE}}" -backend-config="dynamodb_table={{.TERRAFORM_STATE_LOCK}}" -backend-config="encrypt=true" -backend-config="key={{.TERRAFORM_STATE_KEY}}/terraform.state" -backend-config="region={{.AWS_REGION}}" -backend-config="workspace_key_prefix=uec-sf/sfrunner"
+      - terraform apply "tfplan"
 
 
