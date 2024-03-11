@@ -60,6 +60,7 @@ tasks:
       TF_VAR_aws_region: '{{.AWS_REGION}}'
       TF_VAR_repo_name: '{{.ECR_REPO}}'
     cmds:
+      - echo "TF_VAR_repo_name=$TF_VAR_repo_name"
       - terraform apply "tfplan" -no-color
 
 
