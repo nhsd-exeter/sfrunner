@@ -12,8 +12,8 @@ tasks:
     desc: Build this docker image
     dir: src
     cmds:
-      - docker build -t sfrunner:latest-amd64 ARCH=amd64/ .
-      - docker build -t sfrunner:latest-arm64v8 ARCH=arm64v8/ .
+      - docker build -t sfrunner:latest-amd64 --build-arg ARCH=amd64/ .
+      - docker build -t sfrunner:latest-arm64v8 --build-arg ARCH=arm64v8/ .
 
   run:
     desc: Runs a shell inside the sfrunner image
