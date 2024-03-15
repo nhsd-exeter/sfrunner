@@ -45,11 +45,11 @@ pipeline {
             }
         }
 
-        stage('Run Task: infra:plan') {
+        stage('Terraform plan and apply') {
             steps {
-                sh "cd infrastructure/stacks/ecr; /tmp/task init"
-                sh "cd infrastructure/stacks/ecr; /tmp/task plan"
-                sh "cd infrastructure/stacks/ecr; /tmp/task apply"
+                sh "/tmp/task -t infrastructure/taskfile.yml init"
+                sh "/tmp/task -t infrastructure/taskfile.yml plan"
+                sh "/tmp/task -t infrastructure/taskfile.yml apply"
             }
         }
     }
