@@ -24,7 +24,6 @@ tasks:
     cmds:
       - docker run --rm --volume $HOME:/localhost sfrunner:latest init | bash
 
-
   ecr-login:
     internal: false
     desc: Docker login to ECR so one can send/receive docker images.  Must have role assumed, via Leapp
@@ -39,3 +38,17 @@ tasks:
       - task: ecr-login
       - docker tag sfrunner:latest {{.ECR_REPO}}:latest
       - docker push {{.ECR_REPO}}:latest
+
+  ecr-install:
+    desc: Installs sfrunner from remote ECR repo
+    vars:
+      ECR_HOST: '{{.ECR_HOST}}'
+      REPO_NAME: '{{.REPO_NAME}}'
+    requires:
+      vars: [ECR_HOST, REPO_NAME]
+    deps:
+      - task: ecr-login
+        vars:
+          ECR_HOST: '{{.ECR_HOST}}'
+    cmds:
+      - docker run --rm --volume $HOME:/localhost {{.ECR_HOST}}/{{.REPO_NAME}}:latest init | bash

@@ -26,7 +26,8 @@ all development and testing can be done inside the container.
 ├── infrastructure              # infrastructure
 │ └── stacks                    # terraform roots
 │    └── ecr                    # terraform root for creating ecr repo
-└── taskfile.yml                # tasks for building and running sfrunner
+└── taskfile.yml                # tasks for building and running sfrunner, locally and used by github actions
+└── taskfile-infra.yml          # for execution by Terraform to create ECR repo
 
 ```
 
@@ -76,8 +77,32 @@ Then try to use the integration:
 
 
 ## Installation
+                                        
+It is preferred to install sfrunner from ECR, as it is quicker.  
 
-To install sfrunner, clone the repository and run the following commands from inside the `sfrunner` directory:
+In order to do this,
+
+1. please find the ECR repository *host* that contains the sfrunner image, so that you can give it
+as a parameter.  You would expect this to have the format:
+
+AWSACCOUNTID.dkr.ecr.eu-west-2.amazonaws.com
+
+2. please find the ECR repository *repository name* (excluding the host).  You would expect this to look
+like:
+
+some-thing/sfrunner
+                                                          
+3. assume to the correct aws account
+
+Then:
+```bash
+task ecr-install ECR_HOST=AWSACCOUNTID.dkr.ecr.eu-west-2.amazonaws.com ECR_REPO=some-thing/sfrunner
+echo 'export WITH_DOCKER=true #automatically run sfrunner with docker support' >> ~/.zshrc
+```
+
+Where `<ECR_REPO>` is the name of the ECR repository you want to install from.
+
+However, you can install sfrunner directly, clone the repository and run the following commands from inside the `sfrunner` directory:
 
 ```bash
 task build
@@ -113,24 +138,17 @@ Note: the prompt changes depending on whether sfrunner can see you have the corr
 
 ## Usage
 
-Before building the docker image, make sure you are running docker desktop.
-
-To build the docker image, run the following command:
+Once installed you can test operation by running
 
 ```bash
-task build
+sfrunner
 ```
           
-To then install sfrunner to your machine, so you can run `sfrunner` from the command line:
+To check that it is working with your assumed role, assume a role with Leap, and
+at the sfrunner prompt
 
 ```bash
-task install
+aws sts get-caller-identity
 ```
 
-
-### List existing tasks
-
-```bash
-task build
-```
 
