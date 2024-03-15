@@ -1,4 +1,4 @@
-name: Deploy
+name: Build and ECR push
 
 on:
   push:
@@ -20,10 +20,10 @@ jobs:
     steps:
       - name: Install Task
         uses: arduino/setup-task@v2
-#      - name: Check out code
-#        uses: actions/checkout@v4
-#      - name: Build docker image
-#        run: task build
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Build docker image
+        run: task build
       - name: Log into AWS
         uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
