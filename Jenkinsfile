@@ -47,9 +47,9 @@ pipeline {
 
         stage('Run Task: infra:plan') {
             steps {
-                sh "/tmp/task infra:init"
-                sh "/tmp/task infra:plan"
-                sh "/tmp/task infra:apply"
+                sh "cd infrastructure/stacks/ecr; /tmp/task init"
+                sh "cd infrastructure/stacks/ecr; /tmp/task plan"
+                sh "cd infrastructure/stacks/ecr; /tmp/task apply"
             }
         }
     }
