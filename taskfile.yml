@@ -12,7 +12,8 @@ tasks:
     desc: Build this docker image
     dir: src
     cmds:
-      - docker build -t sfrunner:latest .
+      - docker build -t sfrunner:latest-amd64 ARCH=amd64/ .
+      - docker build -t sfrunner:latest-arm64v8 ARCH=arm64v8/ .
 
   run:
     desc: Runs a shell inside the sfrunner image
@@ -36,8 +37,12 @@ tasks:
       ECR_REPO: '{{.ECR_HOST}}/{{.REPO_NAME}}'
     cmds:
       - task: ecr-login
-      - docker tag sfrunner:latest {{.ECR_REPO}}:latest
-      - docker push {{.ECR_REPO}}:latest
+      - docker tag sfrunner:latest-amd64 {{.ECR_REPO}}:latest-amd64
+      - docker push {{.ECR_REPO}}:latest-amd64
+      - docker tag sfrunner:latest-arm64 {{.ECR_REPO}}:latest-arm64
+      - docker push {{.ECR_REPO}}:latest-arm64
+      - docker docker manifest create {{.ECR_REPO}}:latest --amend {{.ECR_REPO}}:latest-amd64 --amend {{.ECR_REPO}}:latest-arm64v8
+      - docker manifest push {{.ECR_REPO}}:latest
 
   ecr-install:
     desc: Installs sfrunner from remote ECR repo
