@@ -39,7 +39,7 @@ tasks:
       - task: ecr-login
       - docker tag sfrunner:latest-amd64 {{.ECR_REPO}}:latest-amd64
       - docker push {{.ECR_REPO}}:latest-amd64
-      - docker tag sfrunner:latest-arm64 {{.ECR_REPO}}:latest-arm64v8
+      - docker tag sfrunner:latest-arm64v8 {{.ECR_REPO}}:latest-arm64v8
       - docker push {{.ECR_REPO}}:latest-arm64v8
       - docker docker manifest create {{.ECR_REPO}}:latest --amend {{.ECR_REPO}}:latest-amd64 --amend {{.ECR_REPO}}:latest-arm64v8
       - docker manifest push {{.ECR_REPO}}:latest
