@@ -30,7 +30,7 @@ tasks:
   ecr-push:
     desc: Pushes the sfrunner image to ECR
     vars:
-      ECR_REPO: '{{.ECR_HOST}}{{.REPO_NAME}}'
+      ECR_REPO: '{{.ECR_HOST}}/{{.REPO_NAME}}'
     cmds:
       - task: ecr-login
       - docker tag sfrunner:latest {{.ECR_REPO}}:latest
