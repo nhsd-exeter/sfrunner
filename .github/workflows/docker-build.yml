@@ -31,4 +31,4 @@ jobs:
           role-session-name: GitHub_to_AWSOIDC
           aws-region: ${{ env.AWS_REGION }}
       - name: Push docker image
-        run: task ecr-push ECR_HOST=${{ secrets.ECR_HOST }} ECR_REPO=${{ secrets.ECR_REPO }}
+        run: task ecr-push ECR_HOST=${{ secrets.ECR_HOST }} REPO_NAME=${{ secrets.REPO_NAME }}
