@@ -85,12 +85,12 @@ In order to do this,
 1. please find the ECR repository *host* that contains the sfrunner image, so that you can give it
 as a parameter.  You would expect this to have the format:
 
-AWSACCOUNTID.dkr.ecr.eu-west-2.amazonaws.com
+`AWSACCOUNTID.dkr.ecr.eu-west-2.amazonaws.com`
 
 2. please find the ECR repository *repository name* (excluding the host).  You would expect this to look
 like:
 
-some-thing/sfrunner
+`some-thing/sfrunner`
                                                           
 3. assume to the correct aws account
 
@@ -109,13 +109,17 @@ task build
 task install
 echo 'export WITH_DOCKER=true #automatically run sfrunner with docker support' >> ~/.zshrc
 ```
-       
+
+## Usage
+
 From then on, whenever you want to use sfrunner, you can just run `sfrunner` from the command line,
 from the root of the service finder source directory, or any other project you are working on.
 
 When sfrunner is run, it will connect to the docker daemon on your host machine in order to run
 docker images.  The `WITH_DOCKER` environment variable is used to tell sfrunner to run with docker in
 this way.
+
+## Testing
 
 To test sfrunner, you can do the following: 
 1. start a new shell so that WITH_DOCKER is set
@@ -134,21 +138,5 @@ Note: the prompt changes depending on whether sfrunner can see you have the corr
 ```
 
 5. Run `aws sts get-caller-identity` to check that you are running as the assumed role
-
-
-## Usage
-
-Once installed you can test operation by running
-
-```bash
-sfrunner
-```
-          
-To check that it is working with your assumed role, assume a role with Leap, and
-at the sfrunner prompt
-
-```bash
-aws sts get-caller-identity
-```
 
 
