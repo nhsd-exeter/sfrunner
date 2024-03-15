@@ -47,9 +47,9 @@ pipeline {
 
         stage('Terraform plan and apply') {
             steps {
-                sh "/tmp/task -t infrastructure/taskfile.yml init"
-                sh "/tmp/task -t infrastructure/taskfile.yml plan"
-                sh "/tmp/task -t infrastructure/taskfile.yml apply"
+                sh "/tmp/task -t taskfile-infra.yml init"
+                sh "/tmp/task -t taskfile-infra.yml plan"
+                sh "/tmp/task -t taskfile-infra.yml apply"
             }
         }
     }
