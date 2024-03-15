@@ -41,7 +41,7 @@ tasks:
       - docker push {{.ECR_REPO}}:latest-amd64
       - docker tag sfrunner:latest-arm64v8 {{.ECR_REPO}}:latest-arm64v8
       - docker push {{.ECR_REPO}}:latest-arm64v8
-      - docker manifest create {{.ECR_REPO}}:latest {{.ECR_REPO}}:latest-amd64 {{.ECR_REPO}}:latest-arm64v8
+      - docker manifest create {{.ECR_REPO}}:latest {{.ECR_REPO}}:latest-arm64v8 {{.ECR_REPO}}:latest-amd64
       - docker manifest push {{.ECR_REPO}}:latest
 
   ecr-install:
