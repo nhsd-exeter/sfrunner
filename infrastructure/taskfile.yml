@@ -1,4 +1,18 @@
+#
+# Used by Jenkins to create the ECR repository
+#
+
 version: '3'
+
+vars:
+  AWS_REGION: "eu-west-2"
+  CONFIG:
+    sh: 'aws secretsmanager get-secret-value --secret-id uec-sf-sfrunner/deployment --region {{.AWS_REGION}} --output json | jq -r ".SecretString | fromjson"'
+  ECR_HOST:
+    sh: jq -nr '{{.CONFIG}}.ECR_HOST'
+  REPO_NAME:
+    sh: jq -nr '{{.CONFIG}}.REPO_NAME'
+  ECR_REPO: '{{.ECR_HOST}}/{{.REPO_NAME}}'
 
 tasks:
 
@@ -22,10 +36,6 @@ tasks:
         sh: jq -nr '{{.CONFIG}}.TERRAFORM_STATE_KEY'
       REPO_NAME:
         sh: jq -nr '{{.CONFIG}}.REPO_NAME'
-    env:
-#      AWS_ACCESS_KEY_ID: '{{.MGMT_AWS_ACCESS_KEY_ID}}'
-#      AWS_SECRET_ACCESS_KEY: '{{.MGMT_AWS_SECRET_ACCESS_KEY}}'
-#      AWS_SESSION_TOKEN: '{{.MGMT_AWS_SESSION_TOKEN}}'
     cmds:
       - terraform --version
       - task: create-plugin-cache-dir
@@ -38,9 +48,6 @@ tasks:
       REPO_NAME:
         sh: jq -nr '{{.CONFIG}}.REPO_NAME'
     env:
-#      AWS_ACCESS_KEY_ID: '{{.MGMT_AWS_ACCESS_KEY_ID}}'
-#      AWS_SECRET_ACCESS_KEY: '{{.MGMT_AWS_SECRET_ACCESS_KEY}}'
-#      AWS_SESSION_TOKEN: '{{.MGMT_AWS_SESSION_TOKEN}}'
       TF_VAR_aws_region: '{{.AWS_REGION}}'
       TF_VAR_repo_name: '{{.REPO_NAME}}'
     cmds:
@@ -54,9 +61,6 @@ tasks:
       REPO_NAME:
         sh: jq -nr '{{.CONFIG}}.REPO_NAME'
     env:
-#      AWS_ACCESS_KEY_ID: '{{.MGMT_AWS_ACCESS_KEY_ID}}'
-#      AWS_SECRET_ACCESS_KEY: '{{.MGMT_AWS_SECRET_ACCESS_KEY}}'
-#      AWS_SESSION_TOKEN: '{{.MGMT_AWS_SESSION_TOKEN}}'
       TF_VAR_aws_region: '{{.AWS_REGION}}'
       TF_VAR_repo_name: '{{.REPO_NAME}}'
     cmds:

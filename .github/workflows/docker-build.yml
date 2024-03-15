@@ -2,12 +2,20 @@ name: Deploy
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
   workflow_dispatch:
 
+env:
+  AWS_REGION : eu-west-2
+
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
-  deployment:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Install Task
@@ -16,4 +24,13 @@ jobs:
         uses: actions/checkout@v4
       - name: Build docker image
         run: task build
-
+      - name: Log into AWS
+        uses: aws-actions/configure-aws-credentials@v1.7.0
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          role-session-name: GitHub_to_AWSOIDC
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Log into ECR
+        run: task ecr-login ECR_HOST=${{ secrets.ECR_HOST }}
+      - name: Push docker image
+        run: task ecr-push ECR_REPO=${{ secrets.ECR_REPO }}

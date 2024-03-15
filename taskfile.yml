@@ -2,27 +2,6 @@ version: '3'
 
 vars:
   AWS_REGION: "eu-west-2"
-#  MGMT_ROLE:
-#    sh: aws sts assume-role --role-arn arn:aws:iam::$AWS_ACCOUNT_ID_MGMT:role/uec-sf-jenkins-assume-role --role-session-name uec-sf-jenkins-mom --duration-seconds 3600
-#  MGMT_AWS_ACCESS_KEY_ID:
-#    sh: echo '{{.MGMT_ROLE}}' | jq -r '.Credentials.AccessKeyId'
-#  MGMT_AWS_SECRET_ACCESS_KEY:
-#    sh: echo '{{.MGMT_ROLE}}' | jq -r '.Credentials.SecretAccessKey'
-#  MGMT_AWS_SESSION_TOKEN:
-#    sh: echo '{{.MGMT_ROLE}}' | jq -r '.Credentials.SessionToken'
-  CONFIG:
-    sh: 'aws secretsmanager get-secret-value --secret-id uec-sf-sfrunner/deployment --region {{.AWS_REGION}} --output json | jq -r ".SecretString | fromjson"'
-  ECR_HOST:
-    sh: jq -nr '{{.CONFIG}}.ECR_HOST'
-  REPO_NAME:
-    sh: jq -nr '{{.CONFIG}}.REPO_NAME'
-  ECR_REPO: '{{.ECR_HOST}}/{{.REPO_NAME}}'
-
-
-
-includes:
-  infra:
-    taskfile: infrastructure/taskfile.yml
 
 tasks:
   build:
