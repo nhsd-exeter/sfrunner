@@ -1,7 +1,6 @@
 ARG VERSION=latest
 ARG OS=debian
 ARG CLI_NAME=toolbox
-ARG AWS_ACC
 
 FROM cloudposse/geodesic:$VERSION-$OS
 
@@ -74,6 +73,7 @@ ENV AWS_DEFAULT_REGION=us-east-1
 ENV AWS_DEFAULT_SHORT_REGION=ue1
 ENV AWS_REGION_ABBREVIATION_TYPE=fixed
 
+ARG AWS_ACC
 ENV DOCKER_IMAGE="${AWS_ACC}.dkr.ecr.eu-west-2.amazonaws.com/uec-sf/sfrunner"
 ENV DOCKER_TAG="latest"
 
