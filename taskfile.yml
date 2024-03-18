@@ -41,7 +41,7 @@ tasks:
       vars: [ECR_HOST, REPO_NAME, PLATFORM_SUFFIX]
     vars:
       ECR_REPO: '{{.ECR_HOST}}/{{.REPO_NAME}}'
-      PLATFORM_SUFFIX: {{.PLATFORM_SUFFIX}}
+      PLATFORM_SUFFIX: '{{.PLATFORM_SUFFIX}}'
     cmds:
       - task: ecr-login
       - docker tag sfrunner:latest-{{.PLATFORM_SUFFIX}} {{.ECR_REPO}}:latest-{{.PLATFORM_SUFFIX}}
