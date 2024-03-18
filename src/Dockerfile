@@ -73,7 +73,7 @@ ENV AWS_DEFAULT_REGION=us-east-1
 ENV AWS_DEFAULT_SHORT_REGION=ue1
 ENV AWS_REGION_ABBREVIATION_TYPE=fixed
 
-ENV DOCKER_IMAGE="sfrunner"
+ENV DOCKER_IMAGE="$AWS_ACC.dkr.ecr.eu-west-2.amazonaws.com/uec-sf/sfrunner"
 ENV DOCKER_TAG="latest"
 
 ENV JAVA_HOME=/usr/lib/jvm/temurin-20-jdk-arm64

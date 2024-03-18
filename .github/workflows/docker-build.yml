@@ -25,9 +25,9 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Build docker image (arm64)
-        run: task build PLATFORM_SUFFIX=arm64 PLATFORM=linux/arm64/v8
+        run: task build PLATFORM_SUFFIX=arm64 PLATFORM=linux/arm64/v8 AWS_ACC=${{ secrets.AWS_ACC }}
       - name: Build docker image (amd64)
-        run: task build PLATFORM_SUFFIX=amd64 PLATFORM=linux/amd64
+        run: task build PLATFORM_SUFFIX=amd64 PLATFORM=linux/amd64 AWS_ACC=${{ secrets.AWS_ACC }}
       - name: Log into AWS
         uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
