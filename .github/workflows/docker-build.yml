@@ -22,13 +22,22 @@ jobs:
         uses: arduino/setup-task@v2
       - name: Check out code
         uses: actions/checkout@v4
-      - name: Build docker image
-        run: task build
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Build docker image (arm64)
+        run: task build PLATFORM_SUFFIX=arm64 PLATFORM=linux/arm64
+      - name: Build docker image (amd64)
+        run: task build PLATFORM_SUFFIX=amd64 PLATFORM=linux/amd64
       - name: Log into AWS
         uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           role-session-name: GitHub_to_AWSOIDC
           aws-region: ${{ env.AWS_REGION }}
-      - name: Push docker image
-        run: task ecr-push ECR_HOST=${{ secrets.ECR_HOST }} REPO_NAME=${{ secrets.REPO_NAME }}
+      - name: Push docker image (arm64)
+        run: task ecr-push ECR_HOST=${{ secrets.ECR_HOST }} REPO_NAME=${{ secrets.REPO_NAME }} PLATFORM_SUFFIX=arm64
+      - name: Push docker image (amd64)
+        run: task ecr-push ECR_HOST=${{ secrets.ECR_HOST }} REPO_NAME=${{ secrets.REPO_NAME }} PLATFORM_SUFFIX=amd64
+      - name: Push manifest
+        run: task push-manifest ECR_HOST=${{ secrets.ECR_HOST }} REPO_NAME=${{ secrets.REPO_NAME }}
+
