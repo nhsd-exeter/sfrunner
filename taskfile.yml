@@ -49,6 +49,12 @@ tasks:
 
   push-manifest:
     desc: Pushes the manifest to ECR
+    vars:
+      ECR_HOST: '{{.ECR_HOST}}'
+      REPO_NAME: '{{.REPO_NAME}}'
+      ECR_REPO: '{{.ECR_HOST}}/{{.REPO_NAME}}'
+    requires:
+      vars: [ ECR_HOST, REPO_NAME ]
     cmds:
       - docker manifest create {{.ECR_REPO}}:latest {{.ECR_REPO}}:latest-arm64 {{.ECR_REPO}}:latest-amd64
       - docker manifest push {{.ECR_REPO}}:latest
