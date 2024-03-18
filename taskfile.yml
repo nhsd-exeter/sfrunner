@@ -11,8 +11,10 @@ tasks:
   build:
     desc: Build this docker image
     vars:
-      PLATFORM: {{.PLATFORM}}
-      PLATFORM_SUFFIX: {{.PLATFORM_SUFFIX}}
+      PLATFORM: '{{.PLATFORM}}'
+      PLATFORM_SUFFIX: '{{.PLATFORM_SUFFIX}}'
+    requires:
+      vars: [PLATFORM, PLATFORM_SUFFIX]
     dir: src
     cmds:
       - docker build -t sfrunner:latest-{{.PLATFORM_SUFFIX}} --platform {{.PLATFORM}} .
@@ -35,6 +37,8 @@ tasks:
 
   ecr-push:
     desc: Pushes the sfrunner image to ECR
+    requires:
+      vars: [ECR_HOST, REPO_NAME, PLATFORM_SUFFIX]
     vars:
       ECR_REPO: '{{.ECR_HOST}}/{{.REPO_NAME}}'
       PLATFORM_SUFFIX: {{.PLATFORM_SUFFIX}}
