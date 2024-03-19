@@ -44,10 +44,11 @@ tasks:
       ECR_REPO: '{{.ECR_HOST}}/{{.REPO_NAME}}'
       PLATFORM_SUFFIX: '{{.PLATFORM_SUFFIX}}'
       VERSION: '{{.VERSION}}'
+      NEW_TAG: '{{.ECR_REPO}}:{{.VERSION}}-{{.PLATFORM_SUFFIX}}'
     cmds:
       - task: ecr-login
-      - docker tag sfrunner:{{.VERSION}}-latest {{.ECR_REPO}}:{{.VERSION}}-{{.PLATFORM_SUFFIX}}
-      - docker push {{.ECR_REPO}}:{{.VERSION}}-{{.PLATFORM_SUFFIX}}
+      - docker tag sfrunner:latest {{.NEW_TAG}}
+      - docker push {{.NEW_TAG}}
 
 
   push-manifest:
