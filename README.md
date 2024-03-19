@@ -96,19 +96,31 @@ like:
 
 Then:
 ```bash
-task ecr-install ECR_HOST=AWSACCOUNTID.dkr.ecr.eu-west-2.amazonaws.com ECR_REPO=some-thing/sfrunner
+task ecr-install ECR_HOST=AWSACCOUNTID.dkr.ecr.eu-west-2.amazonaws.com REPO_NAME=some-thing/sfrunner
 echo 'export WITH_DOCKER=true #automatically run sfrunner with docker support' >> ~/.zshrc
 ```
 
 Where `<ECR_REPO>` is the name of the ECR repository you want to install from.
 
-However, you can install sfrunner directly, clone the repository and run the following commands from inside the `sfrunner` directory:
+However, you can install sfrunner directly, clone the repository and run the following commands from inside the 
+`sfrunner` directory
 
 ```bash
-task build
+task build PLATFORM=linux/arm64/v8 PLATFORM_SUMMARY=arm64 AWS_ACC=[AWSACCOUNTID]
 task install
 echo 'export WITH_DOCKER=true #automatically run sfrunner with docker support' >> ~/.zshrc
 ```
+Take care to substitute the AWS account ID for the mgmt account in place of `[AWSACCOUNTID]`.  
+
+The example above is assuming Apple Silicon, but substitute different values for `PLATFORM` and `PLATFORM_SUMMARY` as 
+appropriate.
+
+| Architecture  | PLATFORM       | PLATFORM_SUMMARY |
+|---------------|----------------|------------------|
+| Apple Silicon | linux/arm64/v8 | arm64            |
+| x86           | linux/amd64    | amd64            |
+
+
 
 ## Usage
 
