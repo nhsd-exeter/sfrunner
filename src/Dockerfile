@@ -76,6 +76,8 @@ ENV AWS_REGION_ABBREVIATION_TYPE=fixed
 ARG AWS_ACC
 ENV DOCKER_IMAGE="${AWS_ACC}.dkr.ecr.eu-west-2.amazonaws.com/uec-sf/sfrunner"
 ENV DOCKER_TAG="latest"
+ARG SFRUNNER_VER
+ENV SFRUNNER_VER="${SFRUNNER_VER}"
 
 ENV JAVA_HOME=/usr/lib/jvm/temurin-20-jdk-arm64
 

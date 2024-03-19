@@ -106,11 +106,14 @@ However, you can install sfrunner directly, clone the repository and run the fol
 `sfrunner` directory
 
 ```bash
-task build PLATFORM=linux/arm64/v8 PLATFORM_SUMMARY=arm64 AWS_ACC=[AWSACCOUNTID]
+task build PLATFORM=linux/arm64/v8 PLATFORM_SUMMARY=arm64 AWS_ACC=[AWSACCOUNTID] SFRUNNER_VER=[SFRUNNER_VER]
 task install
 echo 'export WITH_DOCKER=true #automatically run sfrunner with docker support' >> ~/.zshrc
 ```
 Take care to substitute the AWS account ID for the mgmt account in place of `[AWSACCOUNTID]`.  
+
+Subsitute a version number in the place of `[SFRUNNER_VER]` - this will be accessible inside
+the container in the environment variable `SFRUNNER_VER`. 
 
 The example above is assuming Apple Silicon, but substitute different values for `PLATFORM` and `PLATFORM_SUMMARY` as 
 appropriate.

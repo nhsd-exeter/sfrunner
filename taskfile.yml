@@ -14,11 +14,12 @@ tasks:
       PLATFORM: '{{.PLATFORM}}'
       PLATFORM_SUFFIX: '{{.PLATFORM_SUFFIX}}'
       AWS_ACC: '{{.AWS_ACC}}'
+      SFRUNNER_VER: '{{.SFRUNNER_VER}}'
     requires:
-      vars: [PLATFORM, PLATFORM_SUFFIX, AWS_ACC]
+      vars: [PLATFORM, PLATFORM_SUFFIX, AWS_ACC, SFRUNNER_VER]
     dir: src
     cmds:
-      - docker build -t sfrunner:latest-{{.PLATFORM_SUFFIX}} --platform {{.PLATFORM}} --build-arg AWS_ACC={{.AWS_ACC}} .
+      - docker build -t sfrunner:latest-{{.PLATFORM_SUFFIX}} --platform {{.PLATFORM}} --build-arg AWS_ACC={{.AWS_ACC}} --build-arg SFRUNNER_VER={{.SFRUNNER_VER}} .
 
   run:
     desc: Runs a shell inside the sfrunner image
