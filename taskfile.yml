@@ -46,7 +46,7 @@ tasks:
       VERSION: '{{.VERSION}}'
     cmds:
       - task: ecr-login
-      - docker tag sfrunner:{{.VERSION}}-{{.PLATFORM_SUFFIX}} {{.ECR_REPO}}:{{.VERSION}}-{{.PLATFORM_SUFFIX}}
+      - docker tag sfrunner:{{.VERSION}}-latest {{.ECR_REPO}}:{{.VERSION}}-{{.PLATFORM_SUFFIX}}
       - docker push {{.ECR_REPO}}:{{.VERSION}}-{{.PLATFORM_SUFFIX}}
 
 
