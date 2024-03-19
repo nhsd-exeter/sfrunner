@@ -34,10 +34,16 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           role-session-name: GitHub_to_AWSOIDC
           aws-region: ${{ env.AWS_REGION }}
-      - name: Push docker image (arm64)
-        run: task ecr-push ECR_HOST=${{ secrets.ECR_HOST }} REPO_NAME=${{ secrets.REPO_NAME }} PLATFORM_SUFFIX=arm64
-      - name: Push docker image (amd64)
-        run: task ecr-push ECR_HOST=${{ secrets.ECR_HOST }} REPO_NAME=${{ secrets.REPO_NAME }} PLATFORM_SUFFIX=amd64
-      - name: Push manifest
-        run: task push-manifest ECR_HOST=${{ secrets.ECR_HOST }} REPO_NAME=${{ secrets.REPO_NAME }}
+      - name: Push docker image (arm64) latest
+        run: task ecr-push ECR_HOST=${{ secrets.ECR_HOST }} REPO_NAME=${{ secrets.REPO_NAME }} PLATFORM_SUFFIX=arm64 VERSION=latest
+      - name: Push docker image (arm64) versioned
+        run: task ecr-push ECR_HOST=${{ secrets.ECR_HOST }} REPO_NAME=${{ secrets.REPO_NAME }} PLATFORM_SUFFIX=arm64 VERSION=${{ github.run_number }}
+      - name: Push docker image (amd64) latest
+        run: task ecr-push ECR_HOST=${{ secrets.ECR_HOST }} REPO_NAME=${{ secrets.REPO_NAME }} PLATFORM_SUFFIX=amd64 VERSION=latest
+      - name: Push docker image (amd64) versioned
+        run: task ecr-push ECR_HOST=${{ secrets.ECR_HOST }} REPO_NAME=${{ secrets.REPO_NAME }} PLATFORM_SUFFIX=amd64 VERSION=${{ github.run_number }}
+      - name: Push manifest latest
+        run: task push-manifest ECR_HOST=${{ secrets.ECR_HOST }} REPO_NAME=${{ secrets.REPO_NAME }} VERSION=latest
+      - name: Push manifest versioned
+        run: task push-manifest ECR_HOST=${{ secrets.ECR_HOST }} REPO_NAME=${{ secrets.REPO_NAME }} VERSION=${{ github.run_number }}
 

@@ -39,14 +39,16 @@ tasks:
   ecr-push:
     desc: Pushes the sfrunner image to ECR
     requires:
-      vars: [ECR_HOST, REPO_NAME, PLATFORM_SUFFIX]
+      vars: [ECR_HOST, REPO_NAME, PLATFORM_SUFFIX, VERSION]
     vars:
       ECR_REPO: '{{.ECR_HOST}}/{{.REPO_NAME}}'
       PLATFORM_SUFFIX: '{{.PLATFORM_SUFFIX}}'
+      VERSION: '{{.VERSION}}'
     cmds:
       - task: ecr-login
-      - docker tag sfrunner:latest-{{.PLATFORM_SUFFIX}} {{.ECR_REPO}}:latest-{{.PLATFORM_SUFFIX}}
-      - docker push {{.ECR_REPO}}:latest-{{.PLATFORM_SUFFIX}}
+      - docker tag sfrunner:{{.VERSION}}-{{.PLATFORM_SUFFIX}} {{.ECR_REPO}}:{{.VERSION}}-{{.PLATFORM_SUFFIX}}
+      - docker push {{.ECR_REPO}}:{{.VERSION}}-{{.PLATFORM_SUFFIX}}
+
 
   push-manifest:
     desc: Pushes the manifest to ECR
@@ -54,11 +56,12 @@ tasks:
       ECR_HOST: '{{.ECR_HOST}}'
       REPO_NAME: '{{.REPO_NAME}}'
       ECR_REPO: '{{.ECR_HOST}}/{{.REPO_NAME}}'
+      VERSION: '{{.VERSION}}'
     requires:
-      vars: [ ECR_HOST, REPO_NAME ]
+      vars: [ ECR_HOST, REPO_NAME, VERSION ]
     cmds:
-      - docker manifest create {{.ECR_REPO}}:latest {{.ECR_REPO}}:latest-arm64 {{.ECR_REPO}}:latest-amd64
-      - docker manifest push {{.ECR_REPO}}:latest
+      - docker manifest create {{.ECR_REPO}}:{{.VERSION}} {{.ECR_REPO}}:{{.VERSION}}-arm64 {{.ECR_REPO}}:{{.VERSION}}-amd64
+      - docker manifest push {{.ECR_REPO}}:{{.VERSION}}
 
   ecr-install:
     desc: Installs sfrunner from remote ECR repo
