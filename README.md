@@ -78,6 +78,7 @@ Then try to use the integration:
 * Click confirm and continue
 * You may need to sign into NHS and use MFA
 * After you have signed in, all possible sessions should now be displayed in Leapp
+* The sessions may still not have the default region set correctly in the region column.  If so, right click on the '...' to the right of the region, select change, select region, and manually select the correct region (for example eu-west-2).
 
 
 
