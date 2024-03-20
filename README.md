@@ -49,6 +49,11 @@ it helps to have taskfile installed.  You can follow the instructions at
 ### Leapp
         
 This enables you to 'assume' using a friendly UI, and use the assumed role inside sfrunner
+   
+Leapp requires the awscli, so install either from:
+
+* homebrew `brew install awscli` - you may need to install the session manager plugin as well (https://docs.aws.amazon.com/systems-manager/latest/userguide/install-plugin-macos-overview.html)
+* or install direct from aws (https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 
 Download from [Leapp](https://www.leapp.cloud/download/desktop-app) 
 
