@@ -40,6 +40,8 @@ You need to have the following installed:
 
 Download Docker desktop from [Docker](https://www.docker.com/) 
 
+Make sure it is running.
+
 ### Taskfile
 
 If you want to be able to build and run the tasks for sfrunner itself,
