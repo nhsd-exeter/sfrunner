@@ -74,11 +74,13 @@ ENV AWS_DEFAULT_SHORT_REGION=ue1
 ENV AWS_REGION_ABBREVIATION_TYPE=fixed
 
 ARG AWS_ACC
-ENV DOCKER_IMAGE="${AWS_ACC}.dkr.ecr.eu-west-2.amazonaws.com/uec-sf/sfrunner"
-ENV DOCKER_TAG="latest"
+ENV DOCKER_IMAGE="sfrunner"
+ENV DOCKER_TAG="latest-amd64"
 ARG SFRUNNER_VER
 ENV SFRUNNER_VER="${SFRUNNER_VER}"
 
-ENV JAVA_HOME=/usr/lib/jvm/temurin-20-jdk-arm64
+# Find the Java installation path and set it to an environment variable, then export it
+RUN JAVA_HOME=$(find /usr/lib/jvm/ -name "temurin-20-jdk*" -type d | head -n 1) && \
+    echo "export JAVA_HOME=$JAVA_HOME" >> /etc/profile
 
 WORKDIR /
