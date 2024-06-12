@@ -79,6 +79,8 @@ ENV DOCKER_TAG="latest"
 ARG SFRUNNER_VER
 ENV SFRUNNER_VER="${SFRUNNER_VER}"
 
-ENV JAVA_HOME=/usr/lib/jvm/temurin-20-jdk-arm64
+# Find the Java installation path and set it to an environment variable, then export it
+RUN JAVA_HOME=$(find /usr/lib/jvm/ -name "temurin-20-jdk*" -type d | head -n 1) && \
+    echo "export JAVA_HOME=$JAVA_HOME" >> /etc/profile
 
 WORKDIR /
